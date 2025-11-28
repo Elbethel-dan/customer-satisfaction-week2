@@ -41,11 +41,16 @@ DATA_PATHS = {
     'final_results': 'data/processed/reviews_final.csv'
 }
 
+DB_CONFIG = {
+    'host': os.getenv('DB_HOST', 'localhost'),
+    'port': os.getenv('DB_PORT', 5432),
+    'database': os.getenv('DB_NAME', 'bank_reviews_db'),        
+    'user': os.getenv('DB_USER', 'user'),
+    'password': os.getenv('DB_PASSWORD', 'password')
+}
 
-
-
-
-
-
-
-
+SENTIMENT_CONFIG = {
+    'model_name': os.getenv('SENTIMENT_MODEL_NAME', 'distilbert-base-uncased-finetuned-sst-2-english'),
+    'batch_size': int(os.getenv('SENTIMENT_BATCH_SIZE', 16)),
+    'use_vader': os.getenv('USE_VADER', 'False').lower() in ('true', '1', 't')
+}       
