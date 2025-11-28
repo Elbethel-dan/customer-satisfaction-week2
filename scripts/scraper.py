@@ -16,7 +16,7 @@ import pandas as pd
 from datetime import datetime
 import time
 from tqdm import tqdm
-from config import APP_IDS, BANK_NAMES, SCRAPING_CONFIG, DATA_PATHS
+from scripts.config import APP_IDS, BANK_NAMES, SCRAPING_CONFIG, DATA_PATHS
 
 
 class PlayStoreScraper:
@@ -50,7 +50,7 @@ class PlayStoreScraper:
             print(f"Error getting app info for {app_id}: {str(e)}")
             return None
 
-    def scrape_reviews(self, app_id, count=400):
+    def scrape_reviews(self, app_id, count=500):
         """
         Scrape reviews for a specific app.
         Attempts to fetch 'count' number of reviews, sorted by newest first.
