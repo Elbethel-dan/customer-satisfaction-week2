@@ -264,33 +264,22 @@ class ReviewPreprocessor:
 
     def prepare_final_output(self):
         """Prepare final output format"""
-        # Print a header for this step [8/8]
         print("\n[8/8] Preparing final output...")
 
-        # Define a list of columns in the desired order for the final output file
-        output_columns = [
-            'review_text',
-            'rating',
-            'review_date',
-            'bank_name',
-            'source'
-        ]
-
-        # Filter the list to include only columns that actually exist in our DataFrame
-        # This prevents errors if a column was missed in previous steps
+        # Only keep the 5 columns you want
+        output_columns = ['review_text', 'rating', 'review_date', 'bank_name', 'source']
+        # Keep only columns that exist in the DataFrame
         output_columns = [col for col in output_columns if col in self.df.columns]
-        # Reorder the DataFrame columns according to our list
         self.df = self.df[output_columns]
 
-        # Sort the DataFrame first by 'bank_code' (ascending) and then by 'review_date' (descending/newest first)
-        self.df = self.df.sort_values(['bank_code', 'review_date'], ascending=[True, False])
+        # Sort by date only (newest first)
+        self.df = self.df.sort_values('review_date', ascending=False)
 
-        # Reset the index of the DataFrame so it starts from 0 to N-1 cleanly
-        # drop=True prevents the old index from being added as a new column
+        # Reset the index
         self.df = self.df.reset_index(drop=True)
 
-        # Print the final count of reviews
         print(f"Final dataset: {len(self.df)} reviews")
+
 
     def save_data(self):
         """Save processed data"""
