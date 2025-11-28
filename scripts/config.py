@@ -25,7 +25,7 @@ BANK_NAMES = {
 
 # Scraping Configuration
 SCRAPING_CONFIG = {
-    'reviews_per_bank': int(os.getenv('REVIEWS_PER_BANK', 400)),
+    'reviews_per_bank': int(os.getenv('REVIEWS_PER_BANK', 500)),
     'max_retries': int(os.getenv('MAX_RETRIES', 3)),
     'lang': 'en',
     'country': 'et'  # Ethiopia
@@ -41,6 +41,7 @@ DATA_PATHS = {
     'final_results': 'data/processed/reviews_final.csv'
 }
 
+"""
 DB_CONFIG = {
     'host': os.getenv('DB_HOST', 'localhost'),
     'port': os.getenv('DB_PORT', 5432),
@@ -54,3 +55,4 @@ SENTIMENT_CONFIG = {
     'batch_size': int(os.getenv('SENTIMENT_BATCH_SIZE', 16)),
     'use_vader': os.getenv('USE_VADER', 'False').lower() in ('true', '1', 't')
 }       
+"""
