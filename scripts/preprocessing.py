@@ -317,6 +317,10 @@ class ReviewPreprocessor:
         # Print a separator line
         print("=" * 60)
 
+        # If text_length column is missing, recreate it
+        if 'text_length' not in self.df.columns:
+            self.df['text_length'] = self.df['review_text'].str.len()
+
         # Print various statistics gathered during the process using .get() to avoid errors if key is missing
         print(f"\nOriginal records: {self.stats.get('original_count', 0)}")
         print(f"Records with missing critical data: {self.stats.get('rows_removed_missing', 0)}")
