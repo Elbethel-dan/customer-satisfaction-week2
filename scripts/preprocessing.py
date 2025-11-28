@@ -208,6 +208,33 @@ class ReviewPreprocessor:
         # Record statistics about text cleaning
         self.stats['empty_reviews_removed'] = removed
         self.stats['count_after_cleaning'] = len(self.df)
+    
+
+    def remove_duplicates(self):
+        """Remove duplicate reviews based on review_text"""
+        print("\n[NEW] Removing duplicate reviews...")
+        before_count = len(self.df)
+        # Drop duplicates based on 'review_text', keep the first occurrence
+        self.df = self.df.drop_duplicates(subset=['review_text'], keep='first')
+        removed = before_count - len(self.df)
+        print(f"Removed {removed} duplicate reviews")
+        self.stats['duplicates_removed'] = removed
+
+
+    def remove_amharic_reviews(self):
+        """Remove reviews that contain Amharic text"""
+        print("\n[NEW] Removing Amharic language reviews...")
+        before_count = len(self.df)
+        
+        # Amharic Unicode block: \u1200–\u137F
+        amharic_pattern = r'[\u1200-\u137F]'
+
+        # Keep only reviews that **do not contain Amharic characters**
+        self.df = self.df[~self.df['review_text'].str.contains(amharic_pattern, regex=True, na=False)]
+
+        removed = before_count - len(self.df)
+        print(f"Removed {removed} Amharic reviews")
+        self.stats['amharic_removed'] = removed
 
     def validate_ratings(self):
         """Validate rating values (should be 1-5)"""
@@ -374,6 +401,8 @@ class ReviewPreprocessor:
         self.handle_missing_values()
         self.normalize_dates()
         self.clean_text()
+        self.remove_duplicates() 
+        self.remove_amharic_reviews()
         self.validate_ratings()
         self.prepare_final_output()
 
