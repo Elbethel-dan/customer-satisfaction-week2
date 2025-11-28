@@ -393,7 +393,7 @@ class ReviewPreprocessor:
         self.normalize_dates()
         self.clean_text()
         self.remove_duplicates() 
-        self.remove_amharic_reviews()
+        self.remove_non_english_reviews()
         self.validate_ratings()
         self.prepare_final_output()
 
