@@ -5,3 +5,5 @@ week2
 __pycache__/
 
 .env 
+
+data
