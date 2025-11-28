@@ -2,3 +2,6 @@ week2
 
 .DS_Store
 
+data
+
+__pycache__/
