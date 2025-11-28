@@ -3,7 +3,7 @@ Google Play Store Review Scraper
 Task 1: Data Collection
 
 This script scrapes user reviews from Google Play Store for three Ethiopian banks.
-Target: 500+ reviews per bank (1500 total minimum)
+Target: 800+ reviews per bank (2400 total minimum)
 """
 
 import sys
@@ -50,7 +50,7 @@ class PlayStoreScraper:
             print(f"Error getting app info for {app_id}: {str(e)}")
             return None
 
-    def scrape_reviews(self, app_id, count=500):
+    def scrape_reviews(self, app_id, count=800):
         """
         Scrape reviews for a specific app.
         Attempts to fetch 'count' number of reviews, sorted by newest first.
