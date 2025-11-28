@@ -78,8 +78,8 @@ class ReviewPreprocessor:
 
     def check_missing_data(self):
         """Check for missing data"""
-        # Print a header for this step [1/6]
-        print("\n[1/6] Checking for missing data...")
+        # Print a header for this step [1/8]
+        print("\n[1/8] Checking for missing data...")
 
         # Calculate the count of missing (null) values for each column
         missing = self.df.isnull().sum()
@@ -112,8 +112,8 @@ class ReviewPreprocessor:
 
     def handle_missing_values(self):
         """Handle missing values"""
-        # Print a header for this step [2/6]
-        print("\n[2/6] Handling missing values...")
+        # Print a header for this step [2/8]
+        print("\n[2/8] Handling missing values...")
 
         # Define the critical columns again
         critical_cols = ['review_text', 'rating', 'bank_name']
@@ -142,8 +142,8 @@ class ReviewPreprocessor:
 
     def normalize_dates(self):
         """Normalize date formats to YYYY-MM-DD"""
-        # Print a header for this step [3/6]
-        print("\n[3/6] Normalizing dates...")
+        # Print a header for this step [3/8]
+        print("\n[3/8] Normalizing dates...")
 
         try:
             # Convert the 'review_date' column to pandas datetime objects
@@ -167,8 +167,8 @@ class ReviewPreprocessor:
 
     def clean_text(self):
         """Clean review text"""
-        # Print a header for this step [4/6]
-        print("\n[4/6] Cleaning text...")
+        # Print a header for this step [4/8]
+        print("\n[4/8] Cleaning text...")
 
         def clean_review_text(text):
             """Inner function to clean individual review text strings"""
@@ -212,18 +212,20 @@ class ReviewPreprocessor:
 
     def remove_duplicates(self):
         """Remove duplicate reviews based on review_text"""
-        print("\n[NEW] Removing duplicate reviews...")
+        print("\n[5/8] Removing duplicate reviews...")
         before_count = len(self.df)
         # Drop duplicates based on 'review_text', keep the first occurrence
         self.df = self.df.drop_duplicates(subset=['review_text'], keep='first')
         removed = before_count - len(self.df)
         print(f"Removed {removed} duplicate reviews")
         self.stats['duplicates_removed'] = removed
+        # Record the new total count in stats
+        self.stats['count_after_duplicates'] = len(self.df)
 
 
     def remove_amharic_reviews(self):
         """Remove reviews that contain Amharic text"""
-        print("\n[NEW] Removing Amharic language reviews...")
+        print("\n[6/8] Removing Amharic language reviews...")
         before_count = len(self.df)
         
         # Amharic Unicode block: \u1200–\u137F
@@ -235,11 +237,14 @@ class ReviewPreprocessor:
         removed = before_count - len(self.df)
         print(f"Removed {removed} Amharic reviews")
         self.stats['amharic_removed'] = removed
+        # Record the new total count in stats
+        self.stats['count_after_amharic'] = len(self.df)
+
 
     def validate_ratings(self):
         """Validate rating values (should be 1-5)"""
-        # Print a header for this step [5/6]
-        print("\n[5/6] Validating ratings...")
+        # Print a header for this step [7/8]
+        print("\n[7/8] Validating ratings...")
 
         # Find rows where 'rating' is less than 1 OR greater than 5
         invalid = self.df[(self.df['rating'] < 1) | (self.df['rating'] > 5)]
@@ -259,8 +264,8 @@ class ReviewPreprocessor:
 
     def prepare_final_output(self):
         """Prepare final output format"""
-        # Print a header for this step [6/6]
-        print("\n[6/6] Preparing final output...")
+        # Print a header for this step [8/8]
+        print("\n[8/8] Preparing final output...")
 
         # Define a list of columns in the desired order for the final output file
         output_columns = [
