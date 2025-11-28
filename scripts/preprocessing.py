@@ -223,22 +223,22 @@ class ReviewPreprocessor:
         self.stats['count_after_duplicates'] = len(self.df)
 
 
-    def remove_amharic_reviews(self):
-        """Remove reviews that contain Amharic text"""
-        print("\n[6/8] Removing Amharic language reviews...")
+    def remove_non_english_reviews(self):
+        """Remove reviews that are not primarily English"""
+        print("\n[6/8] Removing non-English language reviews...")
         before_count = len(self.df)
-        
-        # Amharic Unicode block: \u1200–\u137F
-        amharic_pattern = r'[\u1200-\u137F]'
 
-        # Keep only reviews that **do not contain Amharic characters**
-        self.df = self.df[~self.df['review_text'].str.contains(amharic_pattern, regex=True, na=False)]
+        # Pattern: keep only reviews with English letters, numbers, spaces, punctuation
+        english_pattern = r'^[A-Za-z0-9\s\.,!?\'\";:\-\(\)/]+$'
+
+        # Keep rows that fully match allowed English characters
+        self.df = self.df[self.df['review_text'].str.match(english_pattern, na=False)]
 
         removed = before_count - len(self.df)
-        print(f"Removed {removed} Amharic reviews")
-        self.stats['amharic_removed'] = removed
-        # Record the new total count in stats
-        self.stats['count_after_amharic'] = len(self.df)
+        print(f"Removed {removed} non-English reviews")
+        self.stats['non_english_removed'] = removed
+        self.stats['count_after_non_english'] = len(self.df)
+
 
 
     def validate_ratings(self):
