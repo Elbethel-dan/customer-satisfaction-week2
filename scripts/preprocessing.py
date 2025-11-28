@@ -269,17 +269,10 @@ class ReviewPreprocessor:
 
         # Define a list of columns in the desired order for the final output file
         output_columns = [
-            'review_id',
             'review_text',
             'rating',
             'review_date',
-            'review_year',
-            'review_month',
-            'bank_code',
             'bank_name',
-            'user_name',
-            'thumbs_up',
-            'text_length',
             'source'
         ]
 
