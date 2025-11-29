@@ -2,8 +2,6 @@ week2
 
 .DS_Store
 
-__pycache__/
-
-.env 
-
 data
+
+__pycache__/
