@@ -266,8 +266,8 @@ class ReviewPreprocessor:
         """Prepare final output format"""
         print("\n[8/8] Preparing final output...")
 
-        # Only keep the 5 columns you want
-        output_columns = ['review_text', 'rating', 'review_date', 'bank_name', 'source']
+        # Only keep the 7 columns you want
+        output_columns = ['review_id','review_text', 'rating', 'review_date', 'bank_name','app_id', 'source']
         # Keep only columns that exist in the DataFrame
         output_columns = [col for col in output_columns if col in self.df.columns]
         self.df = self.df[output_columns]
