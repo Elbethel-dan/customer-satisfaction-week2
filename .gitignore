@@ -4,4 +4,6 @@ week2
 
 data
 
+.env
+
 __pycache__/
